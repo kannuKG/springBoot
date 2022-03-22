@@ -13,13 +13,17 @@ echo "M2_HOME = ${M2_HOME}"
 """
 }
 }
-
-
-
 stage ('Build') {
 steps {
 bat "mvn clean install"
 }
 }
+  stage('SonarQube analysis') {
+        steps{
+        withSonarQubeEnv('sonarQube') {
+        bat "mvn sonar:sonar"
+    }
+        }
+        }
 }
 }
